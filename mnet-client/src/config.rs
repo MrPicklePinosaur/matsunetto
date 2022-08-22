@@ -1,4 +1,3 @@
-
 /// Basic device configuration
 pub struct Config {
     /// Name of device

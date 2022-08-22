@@ -1,10 +1,11 @@
 #![allow(unused)]
 #![allow(dead_code)]
+mod db;
 mod models;
-mod server;
 mod router;
+mod server;
 
-use rocket::*;
+use rocket::launch;
 use router::routes;
 
 #[launch]

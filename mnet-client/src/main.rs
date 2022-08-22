@@ -1,8 +1,8 @@
 #![allow(unused)]
 #![allow(dead_code)]
-pub mod metrics;
 pub mod api;
 pub mod config;
+pub mod metrics;
 
 use metrics::*;
 

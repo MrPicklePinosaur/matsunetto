@@ -1,19 +1,25 @@
+use rocket::{
+    get, post, routes,
+    serde::json::{json, Json, Value},
+    Route,
+};
+use serde::Deserialize;
 
-use rocket::*;
+use crate::models::Metrics;
 
 #[get("/pull")]
-fn pull() {
+fn pull() {}
 
+#[derive(Deserialize)]
+struct PushBody {
+    metrics: Metrics,
+}
+#[post("/push", format = "json", data = "<body>")]
+fn push(body: Json<PushBody>) -> Value {
+    json!({ "status": 200 })
 }
 
-#[post("/push")]
-fn push() {
-
-}
-
-fn register_device() {
-
-}
+fn register_device() {}
 
 pub fn routes() -> Vec<Route> {
     routes![pull, push]
