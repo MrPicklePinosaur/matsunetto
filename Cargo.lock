@@ -751,22 +751,30 @@ dependencies = [
 ]
 
 [[package]]
-name = "mnet-client"
+name = "mnet_client"
 version = "0.1.0"
 dependencies = [
  "systemstat",
 ]
 
 [[package]]
-name = "mnet-server"
+name = "mnet_server"
 version = "0.1.0"
 dependencies = [
  "anyhow",
  "chrono",
+ "mnet_types",
  "rocket",
  "rusqlite",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "mnet_types"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

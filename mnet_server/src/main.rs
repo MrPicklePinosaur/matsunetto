@@ -1,7 +1,6 @@
 #![allow(unused)]
 #![allow(dead_code)]
 mod db;
-mod models;
 mod router;
 mod server;
 

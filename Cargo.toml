@@ -1,5 +1,6 @@
 [workspace]
 members = [
-    "mnet-server",
-    "mnet-client"
+    "mnet_types",
+    "mnet_server",
+    "mnet_client"
 ]

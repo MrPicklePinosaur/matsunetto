@@ -2,10 +2,10 @@
 default: client
 
 client:
-    cargo run --bin mnet-client
+    cargo run --bin mnet_client
 
 server:
-    cargo run --bin mnet-server
+    cargo run --bin mnet_server
 
 devsetup:
     cp dev/hooks/* .git/hooks

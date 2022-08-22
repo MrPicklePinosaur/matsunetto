@@ -1,8 +1,7 @@
 use anyhow::Result;
 use chrono::{TimeZone, Utc};
+use mnet_types::{Device, DeviceState, Metrics};
 use rusqlite::{params, Connection, ToSql};
-
-use crate::models::{Device, DeviceState, Metrics};
 
 pub fn get_connection() -> rusqlite::Result<Connection> {
     Connection::open("./db/database.db3")

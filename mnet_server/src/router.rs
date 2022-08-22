@@ -1,3 +1,4 @@
+use mnet_types::{api::PushBody, Metrics};
 use rocket::{
     get,
     http::Status,
@@ -7,10 +8,7 @@ use rocket::{
 };
 use serde::Deserialize;
 
-use crate::{
-    db::{get_connection, get_devices, update_metrics},
-    models::Metrics,
-};
+use crate::db::{get_connection, get_devices, update_metrics};
 
 #[get("/pull")]
 fn pull() -> Result<Value, Status> {
@@ -19,10 +17,6 @@ fn pull() -> Result<Value, Status> {
     Ok(json!(devices))
 }
 
-#[derive(Deserialize)]
-struct PushBody {
-    metrics: Metrics,
-}
 #[post("/push", format = "json", data = "<body>")]
 fn push(body: Json<PushBody>) -> Result<Status, Status> {
     let conn = get_connection().map_err(|f| Status::InternalServerError)?;
