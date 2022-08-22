@@ -9,3 +9,7 @@ repository = "https://github.com/MrPicklePinosaur/matsunetto"
 
 [dependencies]
 systemstat = "0.2"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+anyhow = "1"
+
+mnet_types = { path = "../mnet_types" }

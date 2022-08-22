@@ -8,7 +8,7 @@ use rocket::{
 };
 use serde::Deserialize;
 
-use crate::db::{get_connection, get_devices, update_metrics};
+use crate::db::{get_connection, get_devices, migrate, update_metrics};
 
 #[get("/pull")]
 fn pull() -> Result<Value, Status> {
@@ -21,7 +21,8 @@ fn pull() -> Result<Value, Status> {
 fn push(body: Json<PushBody>) -> Result<Status, Status> {
     let conn = get_connection().map_err(|f| Status::InternalServerError)?;
     let id = 0;
-    update_metrics(&conn, id, &body.metrics);
+    migrate(&conn).unwrap();
+    update_metrics(&conn, id, &body).unwrap();
     Ok(Status::Ok)
 }
 
