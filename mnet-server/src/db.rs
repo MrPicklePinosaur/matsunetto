@@ -1,12 +1,11 @@
+use anyhow::Result;
 use chrono::{TimeZone, Utc};
-use rusqlite::{params, Connection, Result, ToSql};
+use rusqlite::{params, Connection, ToSql};
 
-use crate::models::{Device, DeviceState};
+use crate::models::{Device, DeviceState, Metrics};
 
-pub type DBConnection = Connection;
-
-pub fn get_connection() -> Result<Connection> {
-    return Connection::open("./db/database.db3");
+pub fn get_connection() -> rusqlite::Result<Connection> {
+    Connection::open("./db/database.db3")
 }
 
 pub fn migrate(conn: &Connection) -> Result<()> {
@@ -65,4 +64,18 @@ pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
         })
     })?;
     Ok(vec![])
+}
+
+pub fn update_metrics(conn: &Connection, id: u32, metrics: &Metrics) -> Result<()> {
+    let metrics_string = serde_json::to_string(metrics)?;
+    let last_updated = Utc::now().timestamp();
+    conn.execute(
+        "
+        UPDATE devices
+        SET metrics = ?1, last_updated = ?2
+        WHERE id = ?3
+    ",
+        params![metrics_string, last_updated, id],
+    )?;
+    Ok(())
 }

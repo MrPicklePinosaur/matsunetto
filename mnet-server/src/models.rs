@@ -1,24 +1,26 @@
 use std::time::Duration;
 
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Memory {
     pub free: u64,
     pub total: u64,
 }
 
-#[derive(Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Metrics {
     pub battery: f32,
     pub memory: Memory,
     pub uptime: Duration,
 }
 
+#[derive(Serialize, Deserialize)]
 pub enum DeviceState {
     Online,
     Offline,
 }
+#[derive(Serialize, Deserialize)]
 pub struct Device {
     pub name: String,
     pub codename: String,
