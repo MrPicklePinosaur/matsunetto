@@ -1,8 +1,8 @@
 
-default: debug
+default: client
 
-debug:
-    cargo run
+client:
+    cargo run --bin mnet-client
 
 devsetup:
     cp dev/hooks/* .git/hooks

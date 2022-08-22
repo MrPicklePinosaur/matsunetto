@@ -7,6 +7,13 @@ authors = ["MrPicklePinosaur"]
 description = ""
 repository = "https://github.com/MrPicklePinosaur/matsunetto"
 
-[features]
+[[bin]]
+name = "mnet-server"
+path = "src/bin/mnet-server/main.rs"
+
+[[bin]]
+name = "mnet-client"
+path = "src/bin/mnet-client/main.rs"
 
 [dependencies]
+systemstat = "0.2"
