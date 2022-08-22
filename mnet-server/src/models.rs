@@ -1,10 +1,25 @@
-#[macro_use] extern crate juniper;
+use std::time::Duration;
 
-use juniper::*;
-
-#[derive(GraphQLObject)]
-pub struct Device {
-    id: String,
-    name: String,
-    codename: String,
+pub struct Memory {
+    pub free: u64,
+    pub total: u64
 }
+
+pub struct Metrics {
+    pub battery: f32,
+    pub memory: Memory,
+    pub uptime: Duration
+}
+
+pub enum DeviceState {
+    Online,
+    Offline,
+}
+pub struct Device {
+    pub id: String,
+    pub name: String,
+    pub codename: String,
+    pub state: DeviceState,
+    pub metrics: Metrics,
+}
+

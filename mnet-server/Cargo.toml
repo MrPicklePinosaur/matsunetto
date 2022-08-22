@@ -9,5 +9,3 @@ repository = "https://github.com/MrPicklePinosaur/matsunetto"
 
 [dependencies]
 rocket = { version = "0.5.0-rc.2", features = ["json"] }
-juniper = "0.15"
-juniper_rocket = "0.8"

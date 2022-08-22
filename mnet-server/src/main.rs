@@ -2,15 +2,12 @@
 #![allow(dead_code)]
 mod models;
 mod server;
+mod router;
 
-#[macro_use] extern crate rocket;
-
-#[get("/")]
-fn graphql() {
-    juniper_rocket::graphql_source("graphql", None)
-}
+use rocket::*;
+use router::routes;
 
 #[launch]
 fn rocket() -> _ {
-    rocket::build().mount("/", routes![graphql])
+    rocket::build().mount("/", routes())
 }
