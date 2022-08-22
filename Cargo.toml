@@ -1,19 +1,5 @@
-[package]
-name = "matsunetto"
-version = "0.1.0"
-edition = "2021"
-license = "MIT OR Apache-2.0"
-authors = ["MrPicklePinosaur"]
-description = ""
-repository = "https://github.com/MrPicklePinosaur/matsunetto"
-
-[[bin]]
-name = "mnet-server"
-path = "src/bin/mnet-server/main.rs"
-
-[[bin]]
-name = "mnet-client"
-path = "src/bin/mnet-client/main.rs"
-
-[dependencies]
-systemstat = "0.2"
+[workspace]
+members = [
+    "mnet-server",
+    "mnet-client"
+]

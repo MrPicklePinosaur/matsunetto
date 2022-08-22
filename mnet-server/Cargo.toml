@@ -1,0 +1,13 @@
+[package]
+name = "mnet-server"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["MrPicklePinosaur"]
+description = ""
+repository = "https://github.com/MrPicklePinosaur/matsunetto"
+
+[dependencies]
+rocket = { version = "0.5.0-rc.2", features = ["json"] }
+juniper = "0.15"
+juniper_rocket = "0.8"

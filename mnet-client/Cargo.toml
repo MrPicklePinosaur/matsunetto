@@ -1,0 +1,11 @@
+[package]
+name = "mnet-client"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["MrPicklePinosaur"]
+description = ""
+repository = "https://github.com/MrPicklePinosaur/matsunetto"
+
+[dependencies]
+systemstat = "0.2"
