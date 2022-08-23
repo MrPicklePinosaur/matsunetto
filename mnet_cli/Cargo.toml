@@ -13,3 +13,4 @@ anyhow = "1"
 
 mnet_types = { path = "../mnet_types" }
 pino_argparse = { git = "https://github.com/MrPicklePinosaur/pino_argparse" }
+pino_utils = { git = "https://github.com/MrPicklePinosaur/pino_utils" }

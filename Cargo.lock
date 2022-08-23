@@ -843,6 +843,7 @@ dependencies = [
  "anyhow",
  "mnet_types",
  "pino_argparse",
+ "pino_utils",
  "reqwest",
 ]
 
@@ -1092,6 +1093,11 @@ checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 name = "pino_argparse"
 version = "0.1.0"
 source = "git+https://github.com/MrPicklePinosaur/pino_argparse#abf46f80f852ef10452aa7d5a269897e7ea2367c"
+
+[[package]]
+name = "pino_utils"
+version = "0.1.0"
+source = "git+https://github.com/MrPicklePinosaur/pino_utils#036f41c5da3ae141df1987473d4797750981dd5d"
 
 [[package]]
 name = "pkg-config"

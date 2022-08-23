@@ -17,7 +17,7 @@ pub struct Metrics {
     pub uptime: Duration,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq)]
 pub enum DeviceState {
     Online,
     Offline,
