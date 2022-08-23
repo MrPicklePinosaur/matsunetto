@@ -1,0 +1,15 @@
+[package]
+name = "mnet_cli"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+authors = ["MrPicklePinosaur"]
+description = ""
+repository = "https://github.com/MrPicklePinosaur/matsunetto"
+
+[dependencies]
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+anyhow = "1"
+
+mnet_types = { path = "../mnet_types" }
+pino_argparse = { git = "https://github.com/MrPicklePinosaur/pino_argparse" }

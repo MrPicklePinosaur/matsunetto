@@ -2,5 +2,6 @@
 members = [
     "mnet_types",
     "mnet_server",
-    "mnet_client"
+    "mnet_client",
+    "mnet_cli"
 ]

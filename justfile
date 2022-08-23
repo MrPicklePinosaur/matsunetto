@@ -7,6 +7,9 @@ client:
 server:
     cargo run --bin mnet_server
 
+cli:
+    cargo run --bin mnet_cli
+
 devsetup:
     cp dev/hooks/* .git/hooks
 
