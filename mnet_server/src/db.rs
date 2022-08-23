@@ -45,7 +45,7 @@ pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
     let mut query = conn.prepare(
         "
         SELECT name, codename, model, metrics, last_updated
-        FROM users
+        FROM devices
     ",
     )?;
 
@@ -58,7 +58,7 @@ pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
         // attempt to deserialize metrics
         let metrics_str: String = row.get(3)?;
         // TODO DANGER
-        let metrics = serde_json::from_str(&metrics_str).unwrap();
+        let metrics = serde_json::from_str(&metrics_str).ok();
 
         Ok(Device {
             name: row.get(0)?,
@@ -68,7 +68,7 @@ pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
             metrics,
         })
     })?;
-    Ok(vec![])
+    Ok(res.flatten().collect())
 }
 
 pub fn update_metrics(conn: &Connection, id: &str, metrics: &Metrics) -> Result<()> {

@@ -28,5 +28,5 @@ pub struct Device {
     pub codename: String,
     pub model: String,
     pub state: DeviceState,
-    pub metrics: Metrics,
+    pub metrics: Option<Metrics>,
 }
