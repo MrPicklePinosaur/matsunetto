@@ -28,6 +28,7 @@ fn pull() -> Result<Value, Status> {
 fn push(body: Json<PushBody>, api_key: AuthorizationHeader) -> Result<Status, Status> {
     let conn = get_connection().map_err(|f| Status::InternalServerError)?;
     let id = api_key.0;
+    println!("id {}", id);
     update_metrics(&conn, &id, &body).unwrap();
     Ok(Status::Ok)
 }

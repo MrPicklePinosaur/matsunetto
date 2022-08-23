@@ -34,9 +34,6 @@ pub fn decode_jwt(jwt_string: &str) -> Result<String> {
     use jwt::VerifyWithKey;
 
     let key = jwt_key()?;
-    let jwt_secret = env::var("JWT_SECRET")?;
-    let key: Hmac<Sha256> = Hmac::new_from_slice(jwt_secret.as_bytes())?;
-
     let claims: BTreeMap<String, String> = jwt_string.verify_with_key(&key)?;
     let id = claims
         .get("key")

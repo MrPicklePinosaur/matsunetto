@@ -5,6 +5,8 @@ use rocket::{
 };
 use thiserror::Error;
 
+use crate::utils::decode_jwt;
+
 #[derive(Error, Debug)]
 pub enum AuthorizationHeaderError {
     #[error("Missing authorization header")]
@@ -20,10 +22,16 @@ impl<'r> FromRequest<'r> for AuthorizationHeader {
     type Error = AuthorizationHeaderError;
 
     async fn from_request(req: &'r Request<'_>) -> Outcome<Self, Self::Error> {
-        let api_key = req.headers().get_one("Authorization");
-        match api_key {
-            Some(api_key) => Outcome::Success(AuthorizationHeader(api_key.to_owned())),
-            None => Outcome::Failure((Status::Unauthorized, AuthorizationHeaderError::Missing)),
+        let auth_header = req.headers().get_one("Authorization");
+
+        if auth_header.is_none() {
+            return Outcome::Failure((Status::Unauthorized, AuthorizationHeaderError::Missing));
+        }
+        let jwt_string = auth_header.unwrap();
+
+        match decode_jwt(jwt_string) {
+            Ok(api_key) => Outcome::Success(AuthorizationHeader(api_key.to_owned())),
+            Err(_) => Outcome::Failure((Status::Unauthorized, AuthorizationHeaderError::Invalid)),
         }
     }
 }
