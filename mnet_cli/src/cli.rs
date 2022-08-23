@@ -1,11 +1,8 @@
 use mnet_types::DeviceState;
 use pino_argparse::{Cli, Command, Flag, FlagParse};
-use pino_utils::some_or_continue;
+use pino_utils::{ansi_string::*, some_or_continue};
 
-use crate::{
-    api::pull_metrics,
-    colors::{ansi_string, Color, Effect},
-};
+use crate::api::pull_metrics;
 
 pub fn run_cli() {
     let cli = Cli {

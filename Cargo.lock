@@ -1097,7 +1097,7 @@ source = "git+https://github.com/MrPicklePinosaur/pino_argparse#abf46f80f852ef10
 [[package]]
 name = "pino_utils"
 version = "0.1.0"
-source = "git+https://github.com/MrPicklePinosaur/pino_utils#036f41c5da3ae141df1987473d4797750981dd5d"
+source = "git+https://github.com/MrPicklePinosaur/pino_utils#63bfd7bfa8a0da5a236b127b3796b5c25f7a6749"
 
 [[package]]
 name = "pkg-config"
