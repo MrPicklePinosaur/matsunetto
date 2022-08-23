@@ -3,6 +3,8 @@ use chrono::{TimeZone, Utc};
 use mnet_types::{Device, DeviceState, Metrics};
 use rusqlite::{params, Connection, ToSql};
 
+use crate::utils::random_string;
+
 pub fn get_connection() -> rusqlite::Result<Connection> {
     Connection::open("./db/database.db3")
 }
@@ -11,7 +13,7 @@ pub fn migrate(conn: &Connection) -> Result<()> {
     conn.execute(
         "
         CREATE TABLE devices (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id STRING PRIMARY KEY,
             name TEXT NOT NULL,
             codename TEXT NOT NULL,
             model TEXT NOT NULL,
@@ -24,15 +26,19 @@ pub fn migrate(conn: &Connection) -> Result<()> {
     Ok(())
 }
 
-pub fn create_device(conn: &Connection, name: &str, codename: &str, model: &str) -> Result<()> {
+const ID_LENGTH: usize = 8;
+pub fn create_device(conn: &Connection, name: &str, codename: &str, model: &str) -> Result<String> {
+    // generate a random device id
+    let id = random_string(ID_LENGTH);
+
     conn.execute(
         "
-        INSERT INTO devices(name, codename, model, metrics)
-        VALUES (?1, ?2, ?3, ?4, ?5)
+        INSERT INTO devices(id, name, codename, model, metrics, last_updated)
+        VALUES (?1, ?2, ?3, ?4, ?5, ?6)
     ",
-        params![name, codename, model, String::new()],
+        params![id, name, codename, model, String::new(), 0],
     )?;
-    Ok(())
+    Ok(id)
 }
 
 pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
@@ -65,7 +71,7 @@ pub fn get_devices(conn: &Connection) -> Result<Vec<Device>> {
     Ok(vec![])
 }
 
-pub fn update_metrics(conn: &Connection, id: u32, metrics: &Metrics) -> Result<()> {
+pub fn update_metrics(conn: &Connection, id: &str, metrics: &Metrics) -> Result<()> {
     let metrics_string = serde_json::to_string(metrics)?;
     let last_updated = Utc::now().timestamp();
     conn.execute(

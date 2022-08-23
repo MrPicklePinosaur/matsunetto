@@ -1,4 +1,7 @@
-use mnet_types::{api::PushBody, Metrics};
+use mnet_types::{
+    api::{PushBody, RegisterDeviceBody},
+    Metrics,
+};
 use rocket::{
     get,
     http::Status,
@@ -8,7 +11,11 @@ use rocket::{
 };
 use serde::Deserialize;
 
-use crate::db::{get_connection, get_devices, migrate, update_metrics};
+use crate::{
+    db::{create_device, get_connection, get_devices, migrate, update_metrics},
+    headers::AuthorizationHeader,
+    utils::create_jwt,
+};
 
 #[get("/pull")]
 fn pull() -> Result<Value, Status> {
@@ -18,16 +25,30 @@ fn pull() -> Result<Value, Status> {
 }
 
 #[post("/push", format = "json", data = "<body>")]
-fn push(body: Json<PushBody>) -> Result<Status, Status> {
+fn push(body: Json<PushBody>, api_key: AuthorizationHeader) -> Result<Status, Status> {
     let conn = get_connection().map_err(|f| Status::InternalServerError)?;
-    let id = 0;
-    migrate(&conn).unwrap();
-    update_metrics(&conn, id, &body).unwrap();
+    let id = api_key.0;
+    update_metrics(&conn, &id, &body).unwrap();
     Ok(Status::Ok)
 }
 
-fn register_device() {}
+#[post("/admin/device", format = "json", data = "<body>")]
+fn register_device(body: Json<RegisterDeviceBody>) -> Result<Value, Status> {
+    let conn = get_connection().map_err(|f| Status::InternalServerError)?;
+    let id = create_device(&conn, &body.name, &body.codename, &body.model).unwrap();
+
+    // create jwt token
+    let jwt = create_jwt(&id).unwrap();
+
+    Ok(json!({ "key": jwt }))
+}
+
+#[post("/admin/migrate")]
+fn migrate_database() {
+    let conn = get_connection().unwrap();
+    migrate(&conn);
+}
 
 pub fn routes() -> Vec<Route> {
-    routes![pull, push]
+    routes![pull, push, register_device, migrate_database]
 }
